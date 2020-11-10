@@ -10,6 +10,7 @@ app.use("/api", apiRouter);
 
 
 app.all("/*", send404)
+
 app.use(handlePSQLErrors)
 app.use(handleInternalServerErrors)
 
