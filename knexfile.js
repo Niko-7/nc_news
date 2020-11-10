@@ -14,7 +14,7 @@ const customConfig = {
   development: {
     connection: {
       database: 'nc_news',
-     username: 'niko',
+      username: 'niko',
       password: 'password'
     },
   },

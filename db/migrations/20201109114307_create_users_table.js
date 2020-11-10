@@ -1,7 +1,7 @@
 const users = require("../data/development-data/users");
 
 exports.up = function(knex) {
-  console.log("creating users table")
+  
     return knex.schema.createTable("users", (usersTable) => {
         usersTable.text("username").primary();
         usersTable.text("avatar_url");
@@ -10,6 +10,6 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-      console.log("dropping the users table")
+      
     return knex.schema.dropTable("users")
 };

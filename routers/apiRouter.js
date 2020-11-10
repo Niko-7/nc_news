@@ -1,7 +1,10 @@
-const topicsRouter  = require("./topicsRouter");
+const users = require("../db/data/test-data/users");
+const topicsRouter = require("./topicsRouter");
+const usersRouter = require("./usersRouter")
 const apiRouter = require("express").Router();
 
 
 apiRouter.use("/topics", topicsRouter);
+apiRouter.use("/users", usersRouter);
 
 module.exports = apiRouter;
