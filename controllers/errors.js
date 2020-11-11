@@ -3,6 +3,7 @@
 
 
 const handlePSQLErrors = (err, req, res, next) => {
+    console.log(err.toString())
     const badReqCode = ['42703']
     if (badReqCode.includes(err.code)) {
         res.status(400).send({ msg: "Bad request" })

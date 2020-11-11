@@ -3,7 +3,6 @@ const app = require("../app")
 const request = require("supertest")
 const connection = require("../db/connection");
 
-
 describe("/api", () => {
     afterAll(() => {
         return connection.destroy()
@@ -62,31 +61,59 @@ describe("/api", () => {
         })
     })
     describe("testing the articles api", () => {
+        describe("get methods", () => {
         it("responds with a 200 ok and the appropriate object body", () => {
-            return request(app)
-                .get("/api/articles/1")
-                .expect(200)
-                .then((res) => {
-                    expect(res.body.article[0]).toEqual({
-                        "article_id": 1,   
-                        "author": "butter_bridge",
-                        "body": "I find this existence challenging",
-                        "created_at": "2018-11-15T12:21:54.171Z",
-                        "title": "Living in the shadow of a great man",
-                        "topic": "mitch",
-                        "votes": 100,
-                        "comment_count": 1,  
-                })
+                return request(app)
+                    .get("/api/articles/1")
+                    .expect(200)
+                    .then((res) => {
+                        expect(res.body.article[0]).toHaveProperty("comment_count")
+                    })
             })
         })
-
+        it("responds with a 200 ok and an array of articles", () => {
+            return request(app)
+                .get("/api/articles")
+                .expect(200)
+                .then(res => {
+                expect(res.body.articles).toEqual(expect.any(Array));
+            })
+        })
+        it("responds with an array thats sorted by desc date", () => {
+            return request(app)
+                .get("/api/articles?sort_by=created_at")
+                .expect(200)
+                .then(res => {
+                    expect(res.body.articles).toBeSorted({ descending: true })
+                })
+        })
+        it("responds with an array with only articles from butter_bridge", () => {
+            return request(app)
+                .get("/api/articles?author=butter_bridge")
+            .expect(200)
+                .then(res => {
+                    expect(res.body.articles.length).toBe(3)
+                    expect(res.body.articles).toSatisfyAll((article) => {
+                        return article.author === "butter_bridge"
+                    })
+            })
+        })
+        it("responds with an array with only articles from butter_bridge", () => {
+            return request(app)
+                .get("/api/articles?topic=mitch")
+            .expect(200)
+                .then(res => {
+                expect(res.body.articles.length).toBe(11)
+            })
+        })
+        describe("patch methods", () => {
         it("responds with a 200 and the updated object body with decreased votes", () => {
             return request(app)
                 .patch("/api/articles/1")
                 .send({ inc_votes: -99 })
                 .expect(200)
                 .then((res) => {
-                    expect(res.body.article[0]).toEqual({
+                    expect(res.body.article).toEqual({
                         "article_id": 1,
                         "author": "butter_bridge",
                         "body": "I find this existence challenging",
@@ -94,7 +121,7 @@ describe("/api", () => {
                         "title": "Living in the shadow of a great man",
                         "topic": "mitch",
                         "votes": 1,
-                        "comment_count": 1
+                        "comment_count": "13"
                     })
                 })
         })
@@ -104,7 +131,7 @@ describe("/api", () => {
                 .send({ inc_votes: 99 })
                 .expect(200)
                 .then((res) => {
-                    expect(res.body.article[0]).toEqual({
+                    expect(res.body.article).toEqual({
                         "article_id": 1,
                         "author": "butter_bridge",
                         "body": "I find this existence challenging",
@@ -112,12 +139,14 @@ describe("/api", () => {
                         "title": "Living in the shadow of a great man",
                         "topic": "mitch",
                         "votes": 199,
-                        "comment_count": 1
+                        "comment_count": "13"
                     })
                 })
         })
-    })
+        })
+        })
     describe("testing the comments api", () => {
+        describe("post requests", () => {
         it("responds with a 201 and and the posted comment", () => {
             return request(app)
                 .post("/api/articles/1/comments")
@@ -129,7 +158,34 @@ describe("/api", () => {
                            "votes","created_at","body"]))
                 })
         })
-
+            })
+        describe("get requests", () => {
+            it("responds with a 200 ok and an array of comments for given article id", () => {
+                return request(app)
+                    .get("/api/articles/1/comments?sort_by=created_at")
+                    .expect(200)
+                    .then(res => {
+                       expect(res.body.comments).toEqual(expect.any(Array));
+                    })
+            })
+            it("checks that the comments are sorted in the correct order", () => {
+                return request(app)
+                    .get("/api/articles/1/comments?sort_by=created_at")
+                    .expect(200)
+                    .then(res => {
+                    expect(res.body.comments).toBeSorted({ descending: true })
+                })
+            })
+            it("checks that we get an array with the correct properties", () => {
+                return request(app)
+                .get("/api/articles/1/comments?sort_by=created_at")
+                .expect(200)
+                .then((res) => {
+                   expect(Object.keys(res.body.comments[0]))
+                       .toEqual(expect.arrayContaining(["comment_id", "author","votes","created_at","body"]))
+                })
+            })
+        })
 
     })
 });

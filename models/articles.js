@@ -1,27 +1,33 @@
 const connection = require("../db/connection")
 
 
-const fetchArticleById = (id) => { 
+const fetchArticleById = (id) => {
     return connection
-        .select("*")
+        .select("articles.*")
+        .count("comment_id AS comment_count")
         .from("articles")
-        .where(id)
-        .then((res) => {
-            res[0].comment_count = res.length
-            return res
-    })
+        .where({"articles.article_id" : id.article_id})
+        .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
+        .groupBy("articles.article_id")
+    
 }
 
 const updateArticleById = (id, body) => {
+    
     return connection
-        .select("*")
+        
         .from("articles")
         .where(id)
-        .then((res) => {
-            res[0].comment_count = res.length
-            res[0].votes = res[0].votes + body.inc_votes
-            return res
+        .increment("votes", body.inc_votes)
+        .then(() => {
+            return fetchArticleById(id)
+        })
+        .then(articles => {
+
+        return articles[0]
     })
+        
+    
 }
 
 const postComment = (id, body) => {
@@ -37,7 +43,34 @@ const postComment = (id, body) => {
         
 } 
 
+const fetchCommentById = (id, { sort_by = "created_at", order = "desc" }) => {
+    return connection
+        .select("*")
+        .from("comments")
+        .where(id)
+        .orderBy(sort_by , order)
+    
+}
 
+const fetchArticles = ({ sort_by = "created_at", order = "desc" },
+    author, topic) => {
+    const query = connection
+        .select("articles.*")
+        .count("comment_id AS comment_count")
+        .from("articles")
+        .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
+        .groupBy("articles.article_id")
+        .orderBy(sort_by, order)
+    if (author) query.where({ 'articles.author': author })
+    else if (topic) query.where({ "articles.topic": topic })
+  return query;
+}
 
+module.exports = {
+    fetchArticleById,
+    updateArticleById,
+    postComment,
+    fetchCommentById,
+    fetchArticles
+}
 
-module.exports = { fetchArticleById, updateArticleById, postComment }

@@ -88,4 +88,12 @@ module.exports = [
     body: 'Have you seen the size of that thing?',
     created_at: 154700514171,
   },
+    {
+    title: '22 Amazing open source React projects',
+    topic: 'coding',
+    author: 'lurker',
+    body:
+      'This is a collection of open source apps built with React.JS library. In this observation, we compared nearly 800 projects to pick the top 22. (React Native: 11, React: 11). To evaluate the quality, Mybridge AI considered a variety of factors to determine how useful the projects are for programmers. To give you an idea on the quality, the average number of Github stars from the 22 projects was 1,681.',
+    created_at: 1500659650346,
+  }
 ];
