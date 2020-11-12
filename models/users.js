@@ -7,9 +7,8 @@ const fetchUserById = (id) => {
     .select("*")
     .from("users")
     .where(id)
-    // .then(response => {
-    //   return response[0]
-    // })
 }
+
+
 
 module.exports = { fetchUserById }

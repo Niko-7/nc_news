@@ -10,6 +10,18 @@ describe("/api", () => {
     beforeEach(() => {
         return connection.seed.run()
     })
+    describe("testing /api", () => {
+    it.only("responds with a 200 ok", () => {
+        return request(app)
+            .get("/api")
+            .expect(200)
+            .then((res) => {
+                expect(res.body.endpoints).toEqual({
+        "GET /api/articles" : "gets all the articles available"
+    })          
+        })
+    })
+ }) 
     describe("testing the topics api", () => {
     it("responds with a 200 ok", () => {
         return request(app)
