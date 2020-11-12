@@ -4,6 +4,7 @@ const { updateComment, fetchCommentById, deleteCommentById }= require("../models
 
 
 exports.getCommentById = (req, res, next) => {
+    
     fetchCommentById(req.params).then(comment => {
 res.status(200).send({comment : comment})
     })

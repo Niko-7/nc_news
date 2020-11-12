@@ -186,6 +186,14 @@ describe("/api", () => {
                        expect(res.body.comments).toEqual(expect.any(Array));
                     })
             })
+            it("responds with a 200 ok and an array of comments for given article id", () => {
+                return request(app)
+                    .get("/api/articles/1/comments?limit=5")
+                    .expect(200)
+                    .then(res => {
+                       expect(res.body.comments.length).toEqual(5);
+                    })
+            })
             it("checks that the comments are sorted in the correct order", () => {
                 return request(app)
                     .get("/api/articles/1/comments?sort_by=created_at")
