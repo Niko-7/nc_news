@@ -7,7 +7,7 @@ const { intro } = require("./controllers/errors")
 app.use(express.json());
 
 app.use("/api", apiRouter);
-app.route("/").get(intro)
+app.route("").get(intro)
 
 
 app.all("/*", send404)
