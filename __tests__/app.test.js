@@ -88,6 +88,14 @@ describe("/api", () => {
                 expect(res.body.articles).toEqual(expect.any(Array));
             })
         })
+            it("responds with a 200 ok and only the amount of articles specified in the limit", () => {
+            return request(app)
+                .get("/api/articles?limit=11")
+                .expect(200)
+                .then(res => {
+                expect(res.body.articles.length).toEqual(11);
+            })
+        })
         it("responds with an array thats sorted by desc date", () => {
             return request(app)
                 .get("/api/articles?sort_by=created_at")
