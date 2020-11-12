@@ -27,7 +27,8 @@ exports.getCommentById = (req, res, next) => {
     const id = req.params
     const query = req.query
     const limit = req.query.limit
-    fetchCommentById(id, query,limit).then(sortedComments => {
+    const p = req.query.p
+    fetchCommentById(id, query,limit,p).then(sortedComments => {
         res.status(200).send({comments : sortedComments})
     })
     .catch(next)

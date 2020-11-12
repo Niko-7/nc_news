@@ -43,14 +43,14 @@ const postComment = (id, body) => {
         
 } 
 
-const fetchCommentById = (id, { sort_by = "created_at", order = "desc" }, limit=10) => {
+const fetchCommentById = (id, { sort_by = "created_at", order = "desc" }, limit=10, p = 0) => {
     return connection
         .select("*")
         .from("comments")
         .where(id)
         .orderBy(sort_by, order)
         .limit(limit)
-    
+        .offset(p)
 }
 
 const fetchArticles = ({ sort_by = "created_at", order = "desc"}, limit = 11,
