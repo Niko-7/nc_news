@@ -38,8 +38,9 @@ exports.getArticles = (req, res, next) => {
     const limit = req.query.limit
     const author = req.query.author
     const topic = req.query.topic
+    const p = req.query.p
     
-    fetchArticles({ sort_by },limit, author, topic).then(articles => {
+    fetchArticles({ sort_by },limit, p , author, topic).then(articles => {
         res.status(200).send({"queries": ["author", "topic", "sort_by", "order"],"total_count": articles.length, articles : articles})
     })
     .catch(next)
