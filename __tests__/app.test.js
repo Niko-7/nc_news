@@ -11,7 +11,7 @@ describe("/api", () => {
         return connection.seed.run()
     })
     describe("testing /api", () => {
-    it.only("responds with a 200 ok", () => {
+    it("responds with a 200 ok", () => {
         return request(app)
             .get("/api")
             .expect(200)
@@ -102,7 +102,7 @@ describe("/api", () => {
                     })
             })
         })
-        it("responds with an array with only articles from butter_bridge", () => {
+        it("responds with an array with only articles from mitch", () => {
             return request(app)
                 .get("/api/articles?topic=mitch")
             .expect(200)
