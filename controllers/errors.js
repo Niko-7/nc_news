@@ -1,5 +1,8 @@
 
-
+const intro = (req, res, next) => {
+    res.status(200).then({ "homepage": "add /api to the url to get started" })
+    .catch(next)
+}
 
 
 const handlePSQLErrors = (err, req, res, next) => {
@@ -21,4 +24,4 @@ const handleInternalServerErrors = (err, req, res, next) => {
     res.status(500).send({msg: "Internal server error"})
 }
 
-module.exports = {send404 , handleInternalServerErrors, handlePSQLErrors}
+module.exports = {send404 , handleInternalServerErrors, handlePSQLErrors, intro}
