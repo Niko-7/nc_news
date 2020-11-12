@@ -1,10 +1,12 @@
 const { fetchUserById } = require("../models/users")
 const endpoints = 
     {
-    "greeting": "Hello and welcome , below you will find all the possible endpoints and the methods they have available. Enjoy!",
-    "users": "To GET a user /api/:username",
-    "articles": { "articleEndpoint": "To GET all articles /api/articles", 
-    "articleQueries" : "we can sort by a column either asc or desc or filter by an author or topic , examples /api/articles?sort_by=votes ,api/articles?author=butter_bridge api/articles?topic=mitch" }
+   "allTopics": "/api/topics",
+   "userByName": "/api/users/:username",
+   "articleById": "/api/articles/:article_id",
+   "commentByArticleId": "/api/articles/:article_id/comments",
+   "allArticles":"/api/articles",
+   "commentById":"/api/comments/:comment_id"
 }
 
 

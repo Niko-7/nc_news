@@ -37,7 +37,7 @@ exports.getArticles = (req, res, next) => {
     const author = req.query.author
     const topic = req.query.topic
     fetchArticles({ sort_by }, author, topic).then(articles => {
-        res.status(200).send({articles : articles})
+        res.status(200).send({"queries": ["author", "topic", "sort_by", "order"], articles : articles})
     })
     .catch(next)
 }
