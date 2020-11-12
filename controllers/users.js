@@ -8,5 +8,6 @@ exports.getUserById = (req, res, next) => {
 }
    
 exports.getJson = (req, res, next) => {
-res.status(200).send(endpoints)
+  res.status(200).send({ endpoints })
+  .catch(next)
 }
