@@ -1,5 +1,5 @@
-const { fetchArticleById, updateArticleById , fetchCommentById, fetchArticles} = require("../models/articles")
-const { postComment } = require("../models/articles")
+const { fetchArticleById, updateArticleById , fetchCommentById, fetchArticles, postComment} = require("../models/articles")
+
 
 
 exports.getArticleById = (req, res, next) => {
@@ -37,7 +37,6 @@ exports.getArticles = (req, res, next) => {
     const author = req.query.author
     const topic = req.query.topic
     fetchArticles({ sort_by }, author, topic).then(articles => {
-        console.log(articles)
         res.status(200).send({articles : articles})
     })
     .catch(next)

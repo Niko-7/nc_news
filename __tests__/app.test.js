@@ -62,15 +62,7 @@ describe("/api", () => {
     })
     describe("testing the articles api", () => {
         describe("get methods", () => {
-        it("responds with a 200 ok and the appropriate object body", () => {
-                return request(app)
-                    .get("/api/articles/1")
-                    .expect(200)
-                    .then((res) => {
-                        expect(res.body.article[0]).toHaveProperty("comment_count")
-                    })
-            })
-        })
+        
         it("responds with a 200 ok and an array of articles", () => {
             return request(app)
                 .get("/api/articles")
@@ -106,25 +98,26 @@ describe("/api", () => {
                 expect(res.body.articles.length).toBe(11)
             })
         })
-        describe("patch methods", () => {
-        it("responds with a 200 and the updated object body with decreased votes", () => {
-            return request(app)
-                .patch("/api/articles/1")
-                .send({ inc_votes: -99 })
-                .expect(200)
-                .then((res) => {
-                    expect(res.body.article).toEqual({
-                        "article_id": 1,
-                        "author": "butter_bridge",
-                        "body": "I find this existence challenging",
-                        "created_at": "2018-11-15T12:21:54.171Z",
-                        "title": "Living in the shadow of a great man",
-                        "topic": "mitch",
-                        "votes": 1,
-                        "comment_count": "13"
-                    })
-                })
         })
+        describe("patch methods", () => {
+            it("responds with a 200 and the updated object body with decreased votes", () => {
+                return request(app)
+                    .patch("/api/articles/1")
+                    .send({ inc_votes: -99 })
+                    .expect(200)
+                    .then((res) => {
+                        expect(res.body.article).toEqual({
+                            "article_id": 1,
+                            "author": "butter_bridge",
+                            "body": "I find this existence challenging",
+                            "created_at": "2018-11-15T12:21:54.171Z",
+                            "title": "Living in the shadow of a great man",
+                            "topic": "mitch",
+                            "votes": 1,
+                            "comment_count": "13"
+                        })
+                    })
+            })
         it("responds with a 200 and the updated object body with increased votes", () => {
             return request(app)
                 .patch("/api/articles/1")
@@ -185,7 +178,60 @@ describe("/api", () => {
                        .toEqual(expect.arrayContaining(["comment_id", "author","votes","created_at","body"]))
                 })
             })
+            it("responds with a 200 ok and an array of comments", () => {
+                return request(app)
+                    .get("/api/comments/1")
+                    .expect(200)
+                    .then(res => {
+                        expect(res.body.comment).toEqual(expect.any(Array));
+                    })
+            })
         })
-
+        describe("patch requests", () => {
+            it("responds with a 200 and the updated object body with decreased votes", () => {
+                return request(app)
+                    .patch("/api/comments/1")
+                    .send({ inc_votes: -99 })
+                    .expect(200)
+                    .then((res) => {
+                        expect(res.body.comment).toEqual([{
+                            "article_id": 9,
+                            "author": "butter_bridge",
+                            "body": "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+                            "comment_id": 1,
+                            "created_at": "2017-11-22T12:36:03.389Z",
+                            "votes": -83
+                        }])
+                        
+                    })
+            })
+            it("responds with a 200 and the updated object body with increased votes", () => {
+                return request(app)
+                    .patch("/api/comments/1")
+                    .send({ inc_votes: 17 })
+                    .expect(200)
+                    .then((res) => {
+                        expect(res.body.comment).toEqual([{
+                            "article_id": 9,
+                            "author": "butter_bridge",
+                            "body": "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+                            "comment_id": 1,
+                            "created_at": "2017-11-22T12:36:03.389Z",
+                            "votes": 33
+                        }])
+                        
+                    })
+            })
+            })
+        describe("delete requests", () => {
+        test('deletes comment by Id', () => {
+        return request(app)
+            .del('/api/comments/1')
+            .expect(200)
+            .then((res) => {
+                expect(res.body.msg).toEqual("no content")
+            })
+    })
+        })
     })
 });
