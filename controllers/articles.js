@@ -34,10 +34,11 @@ exports.getCommentById = (req, res, next) => {
 
 exports.getArticles = (req, res, next) => {
     const sort_by = req.query.sort_by
+    const limit = req.query.limit
     const author = req.query.author
     const topic = req.query.topic
-    const limit = req.query.limit
-    fetchArticles({ sort_by }, author, topic, limit).then(articles => {
+    
+    fetchArticles({ sort_by },limit, author, topic).then(articles => {
         res.status(200).send({"queries": ["author", "topic", "sort_by", "order"],"total_count": articles.length, articles : articles})
     })
     .catch(next)

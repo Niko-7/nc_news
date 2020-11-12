@@ -90,10 +90,10 @@ describe("/api", () => {
         })
             it("responds with a 200 ok and only the amount of articles specified in the limit", () => {
             return request(app)
-                .get("/api/articles?limit=11")
+                .get("/api/articles?limit=5")
                 .expect(200)
                 .then(res => {
-                expect(res.body.articles.length).toEqual(11);
+                expect(res.body.articles.length).toEqual(5);
             })
         })
         it("responds with an array thats sorted by desc date", () => {

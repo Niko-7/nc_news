@@ -52,7 +52,7 @@ const fetchCommentById = (id, { sort_by = "created_at", order = "desc" }) => {
     
 }
 
-const fetchArticles = ({ sort_by = "created_at", order = "desc", limit = 11 },
+const fetchArticles = ({ sort_by = "created_at", order = "desc"}, limit = 11,
     author, topic) => {
     const query = connection
         .select("articles.*")
@@ -62,6 +62,7 @@ const fetchArticles = ({ sort_by = "created_at", order = "desc", limit = 11 },
         .groupBy("articles.article_id")
         .orderBy(sort_by, order)
         .limit(limit)
+        
     if (author) query.where({ 'articles.author': author })
     else if (topic) query.where({ "articles.topic": topic })
     
