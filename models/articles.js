@@ -9,9 +9,7 @@ const fetchArticleById = (id) => {
         .where({"articles.article_id" : id.article_id})
         .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
         .groupBy("articles.article_id")
-        .then(res => {
-            return res[0]
-        })
+        
 }
 
 const updateArticleById = (id, body) => {

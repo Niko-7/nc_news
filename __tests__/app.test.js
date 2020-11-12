@@ -17,7 +17,12 @@ describe("/api", () => {
             .expect(200)
             .then((res) => {
                 expect(res.body.endpoints).toEqual({
-        "GET /api/articles" : "gets all the articles available"
+               "allArticles": "/api/articles",
+       "allTopics": "/api/topics",
+       "articleById": "/api/articles/:article_id",
+      "commentByArticleId": "/api/articles/:article_id/comments",
+       "commentById": "/api/comments/:comment_id",
+      "userByName": "/api/users/:username"
     })          
         })
     })
@@ -112,7 +117,7 @@ describe("/api", () => {
         })
         })
         describe("patch methods", () => {
-            it("responds with a 200 and the updated object body with decreased votes", () => {
+        it("responds with a 200 and the updated object body with decreased votes", () => {
                 return request(app)
                     .patch("/api/articles/1")
                     .send({ inc_votes: -99 })

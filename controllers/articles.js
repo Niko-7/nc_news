@@ -4,7 +4,7 @@ const { fetchArticleById, updateArticleById , fetchCommentById, fetchArticles, p
 
 exports.getArticleById = (req, res, next) => {
     fetchArticleById(req.params).then((article) => {
-        res.status(200).send({article : article})
+        res.status(200).send({article : article[0]})
     })
     .catch(next)
 }
@@ -37,7 +37,7 @@ exports.getArticles = (req, res, next) => {
     const author = req.query.author
     const topic = req.query.topic
     fetchArticles({ sort_by }, author, topic).then(articles => {
-        res.status(200).send({"queries": ["author", "topic", "sort_by", "order"], articles : articles})
+        res.status(200).send({"queries": ["author", "topic", "sort_by", "order"],"total_count": articles.length, articles : articles})
     })
     .catch(next)
 }
