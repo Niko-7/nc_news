@@ -6,9 +6,11 @@ const {
   handleInternalServerErrors,
   handlePSQLErrors,
 } = require("./controllers/errors");
+const { getJson } = require("./controllers/users");
+
 
 app.use(express.json());
-
+app.all("/", getJson)
 app.use("/api", apiRouter);
 
 app.all("*", send404);
