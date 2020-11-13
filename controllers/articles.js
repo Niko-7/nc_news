@@ -4,6 +4,7 @@ const {
   fetchCommentById,
   fetchArticles,
   postComment,
+  deleteArticleById
 } = require("../models/articles");
 
 exports.getArticleById = (req, res, next) => {
@@ -32,12 +33,12 @@ exports.postCommentByUser = (req, res, next) => {
 
 exports.getCommentById = (req, res, next) => {
   const id = req.params;
-  const sort_by = req.query.sort_by;
-  const limit = req.query.limit;
-  const p = req.query.p;
-  const order = req.query.order;
+  // const sort_by = req.query.sort_by;
+  // const limit = req.query.limit;
+  // const p = req.query.p;
+  // const order = req.query.order;
 
-  fetchCommentById({id, sort_by, order, limit, p})
+  fetchCommentById(id,req.query)
     .then((sortedComments) => {
       res.status(200).send({ comments: sortedComments });
     })
@@ -45,22 +46,28 @@ exports.getCommentById = (req, res, next) => {
 };
 
 exports.getArticles = (req, res, next) => {
-  const sort_by = req.query.sort_by;
-  const limit = req.query.limit;
-  const author = req.query.author;
-  const topic = req.query.topic;
-  const p = req.query.p;
-  const order = req.query.order;
-  
-  fetchArticles({ sort_by, order, limit, p, author, topic })
+  // const sort_by = req.query.sort_by;
+  // const limit = req.query.limit;
+  // const author = req.query.author;
+  // const topic = req.query.topic;
+  // const p = req.query.p;
+  // const order = req.query.order;
+
+  fetchArticles(req.query)
     .then((articles) => {
-      res
-        .status(200)
-        .send({
-          queries: ["author", "topic", "sort_by", "order"],
-          total_count: articles.length,
-          articles: articles,
-        });
+      res.status(200).send({
+        queries: ["author", "topic", "sort_by", "order"],
+        total_count: articles.length,
+        articles: articles,
+      });
+    })
+    .catch(next);
+};
+
+exports.deleteArticle = (req, res, next) => {
+  deleteArticleById(req.params)
+    .then(() => {
+      res.status(204).send({ msg: "no content" });
     })
     .catch(next);
 };

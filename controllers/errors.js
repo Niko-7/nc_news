@@ -15,6 +15,7 @@ const send404 = (req, res, next) => {
 };
 
 const handleInternalServerErrors = (err, req, res, next) => {
+    console.log(err.toString())
     res.status(500).send({msg: "Internal server error"})
 }
 

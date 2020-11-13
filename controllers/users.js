@@ -1,4 +1,4 @@
-const { fetchUserById } = require("../models/users");
+const { fetchUserById, fetchUsers, sendUser } = require("../models/users");
 const endpoints = {
   allTopics: "/api/topics",
   userByName: "/api/users/:username",
@@ -11,7 +11,23 @@ const endpoints = {
 exports.getUserById = (req, res, next) => {
   fetchUserById(req.params)
     .then((foundUser) => {
-      res.status(200).send({ user: foundUser });
+      res.status(200).send({ user: foundUser[0] });
+    })
+    .catch(next);
+};
+
+exports.getUsers = (req, res, next) => {
+  fetchUsers()
+    .then((users) => {
+      res.status(200).send({ users: users });
+    })
+    .catch(next);
+};
+
+exports.postUser = (req, res, next) => {
+  sendUser(req.body)
+    .then((user) => {
+      res.status(201).send({ user: user[0] });
     })
     .catch(next);
 };

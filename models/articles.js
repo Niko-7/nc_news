@@ -33,8 +33,8 @@ const postComment = (id, body) => {
   return connection.into("comments").insert(newObj).returning("*");
 };
 
-const fetchCommentById = ({
-  id,
+const fetchCommentById = (
+  id,{
   sort_by = "created_at",
   order = "desc",
   limit = 10,
@@ -73,10 +73,18 @@ const fetchArticles = ({
   return query;
 };
 
+const deleteArticleById = (id) => {
+  return connection
+    .del("*")
+    .from("comments")
+    .where({ article_id: id.article_id });
+};
+
 module.exports = {
   fetchArticleById,
   updateArticleById,
   postComment,
   fetchCommentById,
   fetchArticles,
+  deleteArticleById,
 };

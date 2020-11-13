@@ -28,6 +28,17 @@ describe("/api", () => {
     });
   });
   describe("testing the topics api", () => {
+    describe("post requests", () => {
+      it("responds with a 200 ok", () => {
+        return request(app)
+          .post("/api/topics")
+          .send({ description: "Code is code", slug: "something" })
+          .expect(201)
+          .then((res) => {
+            expect(res.body.topic).toEqual({ description: 'Code is code', slug: 'something' })
+          });
+      });
+    });
     it("responds with a 200 ok", () => {
       return request(app)
         .get("/api/topics")
@@ -55,12 +66,33 @@ describe("/api", () => {
     });
   });
   describe("testing the users api", () => {
+    describe("post requests", () => {
+      it("201 - posts a new user", () => {
+        return request(app)
+          .post("/api/users")
+          .send({
+            username: "Reezus",
+            name: "Niko",
+            avatar_url:
+              "https://avatars2.githubusercontent.com/u/24394918?s=400&v=33",
+          })
+          .expect(201)
+          .then((res) => {
+            expect(res.body.user).toEqual({
+              username: "Reezus",
+              name: "Niko",
+              avatar_url:
+                "https://avatars2.githubusercontent.com/u/24394918?s=400&v=33",
+            });
+          });
+      });
+    });
     it("responds with a 200 ok and the appropriate object body", () => {
       return request(app)
         .get("/api/users/butter_bridge")
         .expect(200)
         .then((res) => {
-          expect(res.body.user[0]).toEqual({
+          expect(res.body.user).toEqual({
             username: "butter_bridge",
             name: "jonny",
             avatar_url:
@@ -73,14 +105,32 @@ describe("/api", () => {
         .get("/api/users/butter_bridge")
         .expect(200)
         .then((res) => {
-          expect(res.body.user).toEqual(expect.any(Array));
-          expect(Object.keys(res.body.user[0])).toEqual(
+          expect(Object.keys(res.body.user)).toEqual(
             expect.arrayContaining(["username", "avatar_url", "name"])
           );
         });
     });
+    it("200 - returns an array of all the users", () => {
+      return request(app)
+        .get("/api/users")
+        .expect(200)
+        .then((res) => {
+          expect(res.body.users).toEqual(expect.any(Array));
+        });
+    });
   });
   describe("testing the articles api", () => {
+    describe("delete methods", () => {
+      test("deletes article by Id", () => {
+        return request(app)
+          .del("/api/articles/1")
+          .expect(204)
+          .then((res) => {
+            expect(res.body).toEqual({});
+          });
+      });
+    });
+
     describe("get methods", () => {
       it("responds with a 200 ok and an array of articles", () => {
         return request(app)
@@ -254,17 +304,15 @@ describe("/api", () => {
           .send({ inc_votes: -99 })
           .expect(200)
           .then((res) => {
-            expect(res.body.comment).toEqual(
-              {
-                article_id: 9,
-                author: "butter_bridge",
-                body:
-                  "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-                comment_id: 1,
-                created_at: "2017-11-22T12:36:03.389Z",
-                votes: -83,
-              },
-            );
+            expect(res.body.comment).toEqual({
+              article_id: 9,
+              author: "butter_bridge",
+              body:
+                "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+              comment_id: 1,
+              created_at: "2017-11-22T12:36:03.389Z",
+              votes: -83,
+            });
           });
       });
       it("responds with a 200 and the updated object body with increased votes", () => {
@@ -273,17 +321,15 @@ describe("/api", () => {
           .send({ inc_votes: 17 })
           .expect(200)
           .then((res) => {
-            expect(res.body.comment).toEqual(
-              {
-                article_id: 9,
-                author: "butter_bridge",
-                body:
-                  "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-                comment_id: 1,
-                created_at: "2017-11-22T12:36:03.389Z",
-                votes: 33,
-              },
-            );
+            expect(res.body.comment).toEqual({
+              article_id: 9,
+              author: "butter_bridge",
+              body:
+                "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+              comment_id: 1,
+              created_at: "2017-11-22T12:36:03.389Z",
+              votes: 33,
+            });
           });
       });
     });
