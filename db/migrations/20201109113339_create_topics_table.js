@@ -2,7 +2,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable("topics" , (topicsTable) => {
         topicsTable.text("slug").primary();
-        topicsTable.text("description");
+        topicsTable.text("description").notNull();
     })
 };
 
