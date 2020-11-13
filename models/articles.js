@@ -35,9 +35,9 @@ const postComment = (id, body) => {
 
 const fetchCommentById = (
   id,
-  { sort_by = "created_at", order = "desc" },
-  limit = 10,
-  p = 0
+  { sort_by = "created_at", order = "desc",
+    limit = 10,
+    p = 0 }
 ) => {
   return connection
     .select("*")
@@ -49,11 +49,11 @@ const fetchCommentById = (
 };
 
 const fetchArticles = (
-  { sort_by = "created_at", order = "desc" },
-  limit = 11,
-  p = 0,
-  author,
-  topic
+  { sort_by = "created_at", order = "desc",
+    limit = 11,
+    p = 0,
+    author,
+    topic }
 ) => {
   const query = connection
     .select("articles.*")

@@ -49,7 +49,7 @@ exports.getArticles = (req, res, next) => {
   const topic = req.query.topic;
   const p = req.query.p;
 
-  fetchArticles({ sort_by }, limit, p, author, topic)
+  fetchArticles(req.query)
     .then((articles) => {
       res
         .status(200)

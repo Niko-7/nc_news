@@ -254,7 +254,7 @@ describe("/api", () => {
           .send({ inc_votes: -99 })
           .expect(200)
           .then((res) => {
-            expect(res.body.comment).toEqual([
+            expect(res.body.comment).toEqual(
               {
                 article_id: 9,
                 author: "butter_bridge",
@@ -264,7 +264,7 @@ describe("/api", () => {
                 created_at: "2017-11-22T12:36:03.389Z",
                 votes: -83,
               },
-            ]);
+            );
           });
       });
       it("responds with a 200 and the updated object body with increased votes", () => {
@@ -273,7 +273,7 @@ describe("/api", () => {
           .send({ inc_votes: 17 })
           .expect(200)
           .then((res) => {
-            expect(res.body.comment).toEqual([
+            expect(res.body.comment).toEqual(
               {
                 article_id: 9,
                 author: "butter_bridge",
@@ -283,7 +283,7 @@ describe("/api", () => {
                 created_at: "2017-11-22T12:36:03.389Z",
                 votes: 33,
               },
-            ]);
+            );
           });
       });
     });
