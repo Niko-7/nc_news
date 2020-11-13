@@ -33,12 +33,13 @@ const postComment = (id, body) => {
   return connection.into("comments").insert(newObj).returning("*");
 };
 
-const fetchCommentById = (
+const fetchCommentById = ({
   id,
-  { sort_by = "created_at", order = "desc",
-    limit = 10,
-    p = 0 }
-) => {
+  sort_by = "created_at",
+  order = "desc",
+  limit = 10,
+  p = 0,
+}) => {
   return connection
     .select("*")
     .from("comments")
@@ -48,13 +49,14 @@ const fetchCommentById = (
     .offset(p);
 };
 
-const fetchArticles = (
-  { sort_by = "created_at", order = "desc",
-    limit = 11,
-    p = 0,
-    author,
-    topic }
-) => {
+const fetchArticles = ({
+  sort_by = "created_at",
+  order = "desc",
+  limit = 11,
+  p = 0,
+  author,
+  topic,
+}) => {
   const query = connection
     .select("articles.*")
     .count("comment_id AS comment_count")

@@ -32,10 +32,12 @@ exports.postCommentByUser = (req, res, next) => {
 
 exports.getCommentById = (req, res, next) => {
   const id = req.params;
-  const query = req.query;
+  const sort_by = req.query.sort_by;
   const limit = req.query.limit;
   const p = req.query.p;
-  fetchCommentById(id, query, limit, p)
+  const order = req.query.order;
+
+  fetchCommentById({id, sort_by, order, limit, p})
     .then((sortedComments) => {
       res.status(200).send({ comments: sortedComments });
     })
@@ -48,8 +50,9 @@ exports.getArticles = (req, res, next) => {
   const author = req.query.author;
   const topic = req.query.topic;
   const p = req.query.p;
-
-  fetchArticles(req.query)
+  const order = req.query.order;
+  
+  fetchArticles({ sort_by, order, limit, p, author, topic })
     .then((articles) => {
       res
         .status(200)
