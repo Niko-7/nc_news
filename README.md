@@ -10,7 +10,7 @@ In the coming weeks i will use React.js to build the user interface and interact
 
 This project is currently functional as an API and beeing hosted by using Heroku : https://mitch-mitch.herokuapp.com/
 
-This is a list of all the available endpoints which you can also find on the page : 
+A list of all the available endpoints which you can also find on the page : 
   
     allTopics: /api/topics
     userByName: /api/users/:username
