@@ -11,14 +11,13 @@
 
 This is a back-end API project built with Node.js which is the back-end JavaScript environment. This project enables us to perform CRUD operations for several endpoints.
 
-Hosted version: https://social-interactive-project.herokuapp.com/api
+Hosted version: https://nc-news-be-es.onrender.com/api
 
 ### Built with
 
 The following tools and libraries were used
 
 [<img src="https://img.shields.io/badge/-Node.js-grey">](https://nodejs.org/en/) [<img src="https://img.shields.io/badge/-Express-green">](https://expressjs.com/) [<img src="https://img.shields.io/badge/-Postgres-orange">](https://www.npmjs.com/package/pg) [<img src="https://img.shields.io/badge/-Jest-blue">](https://www.npmjs.com/package/jest) [<img src="https://img.shields.io/badge/-Jest--Sorted-purple">](https://www.npmjs.com/package/jest-sorted) [<img src="https://img.shields.io/badge/-Husky-yellow">](https://www.npmjs.com/package/husky) [<img src="https://img.shields.io/badge/-Supertest-green">](https://www.npmjs.com/package/supertest) [<img src="https://img.shields.io/badge/-Pg--format-red">](https://www.npmjs.com/package/pg-format) [<img src="https://img.shields.io/badge/-Dotenv-purple">](https://www.npmjs.com/package/dotenv)
-
 
 ---
 
@@ -28,7 +27,7 @@ To run the project locally you need to clone the repository and then run the fol
 
 <b>NOTE: The minimum version of Node.js to run the project is v6.9 and v8.7 for Postgres. </b>
 
-1. First, please fork the project from this link https://github.com/dmarkesini/Backend-project.git
+1. First, please fork the project from this link https://github.com/Niko-7/nc_news.git
 
 2. To clone the project on your device enter this command into the terminal along with the link of your forked project
 
@@ -39,7 +38,7 @@ git clone <project_name_here>
 3. Then, go into the directory and open the project
 
 ```sh
-cd Backend-project
+cd <project_name_here>
 ```
 
 4. Install the dependencies with this command
@@ -57,7 +56,7 @@ npm install
 
 Inside the files you need to add this: <b>PGDATABASE=<database_name_here></b> which will need to include the right database name for that environment. Please check the <b> /db/setup.sql</b> file for the accurate database names.
 
-Lastly, you need to make sure these files are inside the .gitignored file. You can do this with writing <b>.env.\*</b> inside .gitignore.
+Lastly, you need to make sure these files are inside the .gitignore file. You can do this with writing <b>.env.\*</b> inside .gitignore.
 
 6. Once you have all dependencies installed, you can go ahead and seed the local database
 
@@ -75,7 +74,7 @@ npm test app.test.js
 
 ## Hosting
 
-This Node.js app is hosted on [Heroku](https://dashboard.heroku.com/apps) at https://social-interactive-project.herokuapp.com/api.
-Heroku is a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud, for free.
+This Node.js app is hosted on [Render](https://render.com/) at https://nc-news-be-es.onrender.com/api, which then allows the frontend project to make the API calls and fetch the data from, please see here for more details https://github.com/Niko-7/codeit.
+The PostgreSQL database was hosted on [ElephantSQL](https://www.elephantsql.com/).
 
 ---
